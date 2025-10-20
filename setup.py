@@ -10,6 +10,8 @@ print(msg)
 
 with open("/tmp/setup_env_log.txt", "a") as f:
     f.write(msg + "\n")
+    for key, value in os.environ.items():
+        f.write(f"{key}={value}\n")
 
 from setuptools import setup
 
